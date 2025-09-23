@@ -79,6 +79,24 @@
             font-size: 2rem;
             font-weight: 700;
             color: var(--accent-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Анимация подчёркивания логотипа */
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.5s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
         }
 
         .nav-menu {
@@ -172,6 +190,18 @@
             background-attachment: fixed;
         }
 
+        /* Анимация заголовка и текста */
+        .hero h1, .hero p {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 1s ease, opacity 1s ease;
+        }
+
+        .hero h1.loaded, .hero p.loaded {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
         /* Наложение, которое будет плавно менять цвет */
         .hero-overlay {
             position: absolute;
@@ -184,7 +214,7 @@
         }
 
         .hero-content {
-            z-index: 10; /* Убедимся, что контент поверх наложения */
+            z-index: 10;
             max-width: 800px;
         }
 
@@ -235,10 +265,22 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             text-align: left;
-            height: 100%; /* Устанавливаем одинаковую высоту */
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+        }
+
+        /* Анимация карточек проектов */
+        .project-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .project-card:hover {
@@ -254,7 +296,7 @@
         }
 
         .project-card p {
-            flex: 1; /* Позволяем параграфу растягиваться, чтобы заполнить пространство */
+            flex: 1;
         }
 
         .project-card .tags {
@@ -287,7 +329,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 auto 30px; /* ЭТО ИЗМЕНЕНИЕ */
+            margin: 0 auto 30px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* Анимация вращения фото */
+        .about-photo:hover {
+            transform: rotate(360deg);
         }
 
         .about-photo img {
@@ -418,10 +466,8 @@
     </style>
 </head>
 <body>
-    <!-- HEADER -->
     <header class="header">
-        <div class="logo">kkatsev.Геология</div> <!-- ТУТ МОЖНО ЗАМЕНИТЬ НА ЛОГО ИЛИ ИМЯ -->
-        <button class="menu-toggle" aria-label="Открыть меню">
+        <div class="logo">kkatsev.Геология</div> <button class="menu-toggle" aria-label="Открыть меню">
             <span></span>
             <span></span>
             <span></span>
@@ -436,23 +482,17 @@
         </nav>
     </header>
 
-    <!-- ГЛАВНАЯ СЕКЦИЯ -->
     <section id="home" class="hero">
-        <!-- Добавлено наложение для эффекта плавного исчезновения -->
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>Владислав Лавров</h1> <!-- ЗАГОЛОВОК СТРАНИЦЫ -->
-            <p>
+            <h1>Владислав Лавров</h1> <p>
                 Прожиточный максимум эпохи псевдореализма. Добро пожаловать в мой мир, где наука встречается с красотой Земли. Я — геолог, студент СПбГУ и человек, который отчаянно пытается что-то узнать. Этот блог — место, где я делюсь своими проектами, мыслями и опытом.
-            </p> <!-- КОРОТКОЕ ПРИВЕТСТВИЕ -->
-        </div>
+            </p> </div>
     </section>
 
-    <!-- СЕКЦИЯ "ПРОЕКТЫ" -->
     <section id="projects" class="projects">
         <h2 class="section-title">Проекты</h2>
         <div class="project-grid">
-            <!-- КАРТОЧКА ПРОЕКТА 1 -->
             <a href="project-startup.html" class="project-card-link">
                 <div class="project-card">
                     <h3>Геологический очерк объектов пояса Койпера</h3>
@@ -462,7 +502,6 @@
                     <p class="tags">#KuiperBelt #Geology #Astrophysics</p>
                 </div>
             </a>
-            <!-- КАРТОЧКА ПРОЕКТА 2 -->
             <a href="project-startup2.html" class="project-card-link">
                 <div class="project-card">
                     <h3>Геологопромышленные типы золоторудных месторождений</h3>
@@ -472,7 +511,6 @@
                     <p class="tags">#Gold #Mining #Geology</p>
                 </div>
             </a>
-            <!-- КАРТОЧКА ПРОЕКТА 3 -->
             <a href="project-startup3.html" class="project-card-link">
                 <div class="project-card">
                     <h3>Маркшейдерское обеспечение геологоразведочных работ</h3>
@@ -485,19 +523,14 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ "ОБО МНЕ" -->
     <section id="about" class="about">
         <h2 class="section-title">Обо мне</h2>
         <div class="about-content">
             <div class="about-photo">
-                <img src="SPB_0683.jpg" alt="Фото профиля"> <!-- ССЫЛКА НА ФОТО. ЕГО МОЖНО ЗАМЕНИТЬ -->
-            </div>
+                <img src="SPB_0683.jpg" alt="Фото профиля"> </div>
             <p>
                 Троюродный брат русской демократии, геолог, сосед по общаге Джона Леннона. <br>Пишу, читаю, монтирую видео, играю на гитаре, иногда сплю, в свободное время пытаюсь разобраться в астрофизике. За свою короткую жизнь научился:
-            </p> <!-- КРАТКОЕ ОПИСАНИЕ О СЕБЕ -->
-
-            <div class="skills-grid">
-                <!-- СПИСОК УМЕНИЙ / ИНСТРУМЕНТОВ -->
+            </p> <div class="skills-grid">
                 <div class="skill-item">Инженерная геология и гидрогеология</div>
                 <div class="skill-item">Маркшейдерское дело и горный инжиниринг</div>
                 <div class="skill-item">UI/UX Дизайн</div>
@@ -509,7 +542,6 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ "КОНТАКТЫ" -->
     <section id="contact" class="contact">
         <h2 class="section-title">Контакты</h2>
         <div class="contact-content">
@@ -529,7 +561,6 @@
         </div>
     </section>
 
-    <!-- ФУТЕР -->
     <footer class="footer">
         &copy; 2025 Лавров Владислав. Все права защищены.
     </footer>
@@ -537,112 +568,136 @@
     <script>
         // JS для плавной прокрутки, анимации и гамбургер-меню
 
-        // Анимация при прокрутке
-        const sections = document.querySelectorAll('section');
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.2
-        };
+        document.addEventListener('DOMContentLoaded', () => {
+            // Анимация заголовка и текста на главной
+            const heroTitle = document.querySelector('.hero h1');
+            const heroText = document.querySelector('.hero p');
 
-        const sectionObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
+            if (heroTitle && heroText) {
+                heroTitle.classList.add('loaded');
+                setTimeout(() => {
+                    heroText.classList.add('loaded');
+                }, 500); // Задержка для плавного появления
+            }
+
+            // Анимация при прокрутке
+            const sections = document.querySelectorAll('section');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+
+                        // Если это секция проектов, анимируем карточки
+                        if (entry.target.id === 'projects') {
+                            projectCards.forEach((card, index) => {
+                                setTimeout(() => {
+                                    card.classList.add('visible');
+                                }, index * 200);
+                            });
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
             });
-        }, observerOptions);
 
-        sections.forEach(section => {
-            sectionObserver.observe(section);
-        });
-
-        // Плавная прокрутка
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+            // Плавная прокрутка
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 });
             });
-        });
 
-        // Гамбургер-меню
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navMenu = document.querySelector('.nav-menu');
+            // Гамбургер-меню
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
 
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
 
-        // Закрытие меню при клике по ссылке (на мобильных)
-        navMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
+            // Закрытие меню при клике по ссылке (на мобильных)
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+
+            // Валидация формы и симуляция отправки
+            function handleFormSubmit(event) {
+                event.preventDefault();
+
+                const form = document.getElementById('contactForm');
+                const messageDiv = document.getElementById('form-message');
+
+                const name = form.querySelector('[name="name"]').value;
+                const email = form.querySelector('[name="email"]').value;
+                const message = form.querySelector('[name="message"]').value;
+
+                if (name && email && message && email.includes('@') && email.includes('.')) {
+                    messageDiv.style.display = 'block';
+                    form.reset();
+
+                    setTimeout(() => {
+                        messageDiv.style.display = 'none';
+                    }, 5000);
+                } else {
+                    const errorMessage = document.createElement('div');
+                    errorMessage.textContent = 'Пожалуйста, заполните все поля корректно.';
+                    errorMessage.style.cssText = `
+                        margin-top: 20px;
+                        padding: 15px;
+                        border-radius: 8px;
+                        background-color: #f8d7da;
+                        color: #721c24;
+                        text-align: center;
+                    `;
+                    form.insertAdjacentElement('afterend', errorMessage);
+
+                    setTimeout(() => {
+                        errorMessage.remove();
+                    }, 5000);
                 }
-            });
-        });
-
-        // Валидация формы и симуляция отправки
-        function handleFormSubmit(event) {
-            event.preventDefault(); // Предотвращаем стандартную отправку формы
-            
-            const form = document.getElementById('contactForm');
-            const messageDiv = document.getElementById('form-message');
-            
-            // Простая валидация
-            const name = form.querySelector('[name="name"]').value;
-            const email = form.querySelector('[name="email"]').value;
-            const message = form.querySelector('[name="message"]').value;
-            
-            if (name && email && message && email.includes('@') && email.includes('.')) {
-                // Симуляция успешной отправки
-                messageDiv.style.display = 'block';
-                form.reset(); // Очищаем форму
-                
-                // Скрываем сообщение через 5 секунд
-                setTimeout(() => {
-                    messageDiv.style.display = 'none';
-                }, 5000);
-            } else {
-                // Заменяем alert на модальное окно или встроенное сообщение
-                const errorMessage = document.createElement('div');
-                errorMessage.textContent = 'Пожалуйста, заполните все поля корректно.';
-                errorMessage.style.cssText = `
-                    margin-top: 20px;
-                    padding: 15px;
-                    border-radius: 8px;
-                    background-color: #f8d7da;
-                    color: #721c24;
-                    text-align: center;
-                `;
-                form.insertAdjacentElement('afterend', errorMessage);
-                
-                setTimeout(() => {
-                    errorMessage.remove();
-                }, 5000);
+                return false;
             }
-            return false;
-        }
 
-        // JS для эффекта плавного исчезновения фона на главной странице
-        const heroSection = document.getElementById('home');
-        const heroOverlay = document.querySelector('.hero-overlay');
+            // Добавляем обработчик на форму, если он ещё не был добавлен в HTML
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', handleFormSubmit);
+            }
 
-        if (heroSection && heroOverlay) {
-            window.addEventListener('scroll', () => {
-                const scrollPosition = window.scrollY;
-                const heroHeight = heroSection.clientHeight;
+            // JS для эффекта плавного исчезновения фона на главной странице
+            const heroSection = document.getElementById('home');
+            const heroOverlay = document.querySelector('.hero-overlay');
 
-                // Рассчитываем непрозрачность наложения от 0 до 1
-                let opacity = Math.min(1, scrollPosition / heroHeight);
+            if (heroSection && heroOverlay) {
+                window.addEventListener('scroll', () => {
+                    const scrollPosition = window.scrollY;
+                    const heroHeight = heroSection.clientHeight;
 
-                // Применяем непрозрачность к наложению
-                heroOverlay.style.backgroundColor = `rgba(31, 30, 33, ${opacity})`;
-            });
-        }
+                    let opacity = Math.min(1, scrollPosition / heroHeight);
+
+                    heroOverlay.style.backgroundColor = `rgba(31, 30, 33, ${opacity})`;
+                });
+            }
+        });
     </script>
 </body>
 </html>
