@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проект: Геологический очерк объектов пояса Койпера</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;700&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS-переменные для удобной настройки цветов */
+        :root {
+            --primary-bg: rgb(31, 30, 33);
+            --secondary-bg: rgb(221, 194, 166);
+            --accent-color: rgb(223, 170, 109);
+            --text-color-light: rgb(221, 194, 166);
+            --text-color-dark: rgb(31, 30, 33);
+            --main-font: 'Cormorant Garamond', serif;
+            --sans-font: 'Montserrat', sans-serif;
+        }
+
+        /* Общие стили для всего документа */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--sans-font);
+            background-color: var(--primary-bg);
+            color: var(--text-color-light);
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--text-color-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover, a:focus {
+            color: var(--accent-color);
+        }
+
+        section {
+            padding: 80px 5%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Навигация */
+        .header {
+            background: var(--primary-bg);
+            color: var(--text-color-light);
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .logo {
+            font-family: var(--main-font);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 40px;
+        }
+        
+        .nav-menu li a {
+            position: relative;
+            padding-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu li a:hover::after,
+        .nav-menu li a:focus::after {
+            width: 100%;
+        }
+
+        /* Гамбургер-меню для мобильной версии */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle span {
+            height: 2px;
+            width: 25px;
+            background-color: var(--text-color-light);
+            margin-bottom: 4px;
+            transition: 0.3s ease;
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background: var(--primary-bg);
+                width: 100%;
+                padding: 20px 5%;
+                transition: transform 0.3s ease;
+                transform: translateY(-100%);
+            }
+            .nav-menu.active {
+                display: flex;
+                transform: translateY(0);
+            }
+            .nav-menu li {
+                margin: 10px 0;
+                text-align: right;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+        }
+        
+        /* Стили для страницы проекта */
+        .project-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-content-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2; /* Убедимся, что контент поверх фона */
+        }
+
+        .project-text-and-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .project-text-and-image {
+                flex-direction: row;
+                text-align: left;
+            }
+        }
+
+        .project-title {
+            font-family: var(--main-font);
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        .project-description {
+            max-width: 800px;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+        .download-btn {
+            background-color: var(--accent-color);
+            color: var(--text-color-dark);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background-color: rgb(200, 150, 90);
+            transform: scale(1.05);
+        }
+        
+        /* Обновлённые стили для фонового изображения */
+        .project-image-background {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: auto;
+            height: auto;
+            transform: rotate(180deg);
+            opacity: 0.3;
+            z-index: -1; /* Чтобы было за текстом */
+        }
+        
+
+        .project-image-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+.project-image-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Комбинируем градиенты для всех сторон */
+            background: 
+                /* Верхний градиент */
+                linear-gradient(to bottom, var(--primary-bg) 0%, transparent 100%),
+                /* Нижний градиент */
+                linear-gradient(to top, var(--primary-bg) 0%, transparent 15%),
+                /* Левый градиент */
+                linear-gradient(to right, var(--primary-bg) 0%, transparent 15%),
+                /* Правый градиент */
+                linear-gradient(to left, var(--primary-bg) 0%, transparent 15%);
+        }
+
+/* Стили для сообщения о разработке */
+        .project-in-progress {
+            background-color: transparent;
+            color: var(--text-color-light);
+            border: 2px solid var(--text-color-light);
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+.back-btn {
+            background: transparent;
+            border: 1px solid var(--text-color-light);
+            color: var(--text-color-light);
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: var(--text-color-light);
+            color: var(--text-color-dark);
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-bg);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(221, 194, 166, 0.1);
+        }
+        /* Дополнительные стили для мобильных */
+        @media (max-width: 768px) {
+            .project-image-background {
+                top: 50%;
+                left: 0;
+                right: auto;
+                bottom: auto;
+                width: 120vw;
+                height: 120vw;
+                transform: rotate(25deg) translateX(-20%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">kkatsev.Геология</div>
+        <button class="menu-toggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <a href="index.html" class="back-btn">Вернуться</a>
+    </header>
+
+    <!-- СЕКЦИЯ ПРОЕКТА -->
+    <section id="project-page" class="project-page visible">
+        <h1 class="project-title">Геологический очерк объектов пояса Койпера</h1>
+        <div class="project-content-wrapper">
+            <div class="project-text-and-image">
+                <p class="project-description">
+                    Исследование сосредоточено на изучении геологических особенностей объектов пояса Койпера, их минералогичекого состава, условий формирования и нынешних процессах, распределения объектов Пояса Койпера по Солнечной системе в зависимости от их плотности. Проведена систематизация имеющихся данных о геофизических исследованиях Пояса Койпера из различных источников и их интерпретация. <br> <br>The study focused on examining the geological features of Kuiper Belt objects, their mineralogical composition, formation conditions, and current processes, as well as the distribution of Kuiper Belt objects throughout the Solar System depending on their density. Foreign geophysical, astrophysical, and astronomical scientific works were used. An attempt was made to systematize the available data on geophysical studies of the Kuiper Belt from various sources and interpret them.
+                </p>
+            </div>
+            <div class="project-in-progress">Проект ещё в разработке</div>
+        </div>
+        <div class="project-image-background">
+            <!-- ЗАМЕНИ ЭТУ ССЫЛКУ НА СВОЕ ПРЯМОУГОЛЬНОЕ ФОТО ИЛИ НАЗВАНИЕ ФАЙЛА -->
+            <img src="kuiper.jpg" alt="Фоновая фотография проекта">
+        </div>
+    </section>
+
+    <script>
+        // JS для анимации и гамбургер-меню
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
+
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

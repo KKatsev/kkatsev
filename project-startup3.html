@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Геологический очерк объектов пояса Койпера</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;700&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS-переменные для удобной настройки цветов */
+        :root {
+            --primary-bg: rgb(31, 30, 33);
+            --secondary-bg: rgb(221, 194, 166);
+            --accent-color: rgb(223, 170, 109);
+            --text-color-light: rgb(221, 194, 166);
+            --text-color-dark: rgb(31, 30, 33);
+            --main-font: 'Cormorant Garamond', serif;
+            --sans-font: 'Montserrat', sans-serif;
+        }
+
+        /* Общие стили для всего документа */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--sans-font);
+            background-color: var(--primary-bg);
+            color: var(--text-color-light);
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--text-color-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover, a:focus {
+            color: var(--accent-color);
+        }
+
+        section {
+            padding: 80px 5%;
+        }
+        
+        /* Навигация */
+        .header {
+            background: var(--primary-bg);
+            color: var(--text-color-light);
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: var(--main-font);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        /* Кнопка "Скачать презентацию" */
+        .download-btn {
+            background-color: var(--accent-color);
+            color: var(--text-color-dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 700;
+            display: inline-block; /* Делаем ссылку похожей на кнопку */
+        }
+        
+        .download-btn:hover {
+            background-color: rgb(200, 150, 90);
+            transform: translateY(-2px);
+        }
+        
+        /* Основной контент страницы */
+        .project-section {
+            padding-top: 120px; /* Чтобы не перекрывалось шапкой */
+            min-height: 100vh;
+            text-align: center;
+        }
+        
+        .project-section h1 {
+            font-family: var(--main-font);
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+        
+        .project-section p {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid var(--text-color-light);
+            color: var(--text-color-light);
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: var(--text-color-light);
+            color: var(--text-color-dark);
+        }
+
+
+        /* Обновлённые стили для фонового изображения */
+        .project-image-background {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: -5%;
+            left: 0;
+            width: auto;
+            height: auto;
+            transform: rotate(0deg);
+            opacity: 0.3;
+            z-index: -1; /* Вот та самая ошибка! Меняем на -1, чтобы картинка была ПОД текстом */
+        }
+        
+
+        .project-image-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-image-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Комбинируем градиенты для всех сторон */
+            background: 
+                /* Верхний градиент */
+                linear-gradient(to bottom, var(--primary-bg) 0%, transparent 100%),
+                /* Нижний градиент */
+                linear-gradient(to top, var(--primary-bg) 0%, transparent 15%),
+                /* Левый градиент */
+                linear-gradient(to right, var(--primary-bg) 0%, transparent 15%),
+                /* Правый градиент */
+                linear-gradient(to left, var(--primary-bg) 0%, transparent 15%);
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-bg);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(221, 194, 166, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-controls">
+            <div class="logo">kkatsev.Геология</div>
+        </div>
+        <a href="index.html" class="back-btn">Вернуться</a>
+    </header>
+
+    <!-- СЕКЦИЯ ПРОЕКТА -->
+    <section class="project-section">
+        <h1>Маркшейдерское обеспечение геологоразведочных работ</h1>
+        <p>
+            В данной работе рассматривается маркшейдерское обеспечение геологоразведочных работ на примере Комаровского золоторудного месторождения, разрабатываемого открытым способом. Проект включает горно-геологическую характеристику месторождения, анализ существующих маркшейдерских сетей и методов измерений. В работе представлены рекомендации по оптимизации маркшейдерских работ, а также рассматриваются вопросы техники безопасности и охраны труда. Результаты исследования имеют практическое значение для повышения эффективности и безопасности горных работ на данном и аналогичных предприятиях.<br> <br>This capstone project systematizes knowledge about the geological and industrial types of gold deposits. The aim of the study is to examine the geological characteristics, methods of prospecting and exploration, as well as economic significance. The first part covers the theoretical foundations, classification of deposits, and geochemistry of gold. Particular attention is paid to geological surveying, geophysical and geochemical methods. The second part provides a detailed description of hydrothermal and placer types of deposits. The results obtained can be used to improve the productivity of geological exploration work. 
+        </p>
+        <div class="project-image-background">
+            <!-- ЗАМЕНИ ЭТУ ССЫЛКУ НА СВОЕ ПРЯМОУГОЛЬНОЕ ФОТО ИЛИ НАЗВАНИЕ ФАЙЛА -->
+            <img src="heavy-machinery-used-construction-industry-engineering.jpg" alt="Фоновая фотография проекта">
+        </div>
+        <!-- ОБНОВЛЁННАЯ ССЫЛКА ДЛЯ СКАЧИВАНИЯ -->
+        <a href="Маркшейдерское обеспечение геологоразведочных работ - Лавров В..pdf" download="Маркшейдерское обеспечение геологоразведочных работ - Лавров В..pdf" class="download-btn">Скачать работу</a>
+    </section>
+
+    <!-- ФУТЕР -->
+    <footer class="footer">
+        &copy; 2025 Лавров Владислав. Все права защищены.
+    </footer>
+
+    <script>
+        // Здесь не нужен скрипт, потому что ссылка с атрибутом download работает сама по себе.
+    </script>
+</body>
+</html>
