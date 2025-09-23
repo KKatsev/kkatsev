@@ -386,6 +386,7 @@
             font-weight: 500;
         }
 
+        /* Стили для формы обратной связи */
         .contact-form {
             display: flex;
             flex-direction: column;
@@ -396,6 +397,7 @@
 
         .contact-form input,
         .contact-form textarea {
+            width: 100%;
             padding: 15px;
             border-radius: 8px;
             border: 1px solid rgba(31, 30, 33, 0.3);
@@ -413,6 +415,7 @@
         }
 
         .contact-form button {
+            width: 100%;
             background-color: var(--accent-color);
             color: var(--text-color-dark);
             border: none;
@@ -430,15 +433,6 @@
             transform: scale(1.05);
         }
 
-        .form-message {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #d4edda;
-            color: #155724;
-            display: none;
-            text-align: center;
-        }
 
         /* Футер */
         .footer {
@@ -464,6 +458,13 @@
             }
         }
     </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B38G516V5Z"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-B38G516V5Z');
+    </script>
 </head>
 <body>
     <header class="header">
@@ -551,15 +552,24 @@
                 <a href="#">TG: @kkatsev</a>
             </div>
 
-            <form id="contactForm" class="contact-form" onsubmit="return handleFormSubmit(event)">
-                <input type="text" name="name" placeholder="Ваше имя" required>
-                <input type="email" name="email" placeholder="Ваш email" required>
-                <textarea name="message" rows="5" placeholder="Ваше сообщение" required></textarea>
+            <form action="https://formspree.io/f/xblzjkbq" method="POST" class="contact-form">
+                <label>
+                    Ваше имя:
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                </label>
+                <label>
+                    Ваша почта:
+                    <input type="email" name="email" placeholder="Ваш email" required>
+                </label>
+                <label>
+                    Сообщение:
+                    <textarea name="message" rows="5" placeholder="Ваше сообщение" required></textarea>
+                </label>
                 <button type="submit">Отправить сообщение</button>
             </form>
-            <div id="form-message" class="form-message">Сообщение успешно отправлено! Я скоро свяжусь с вами.</div>
         </div>
     </section>
+
 
     <footer class="footer">
         &copy; 2025 Лавров Владислав. Все права защищены.
@@ -638,59 +648,21 @@
                     }
                 });
             });
-
-            // Валидация формы и симуляция отправки
-            function handleFormSubmit(event) {
-                event.preventDefault();
-
-                const form = document.getElementById('contactForm');
-                const messageDiv = document.getElementById('form-message');
-
-                const name = form.querySelector('[name="name"]').value;
-                const email = form.querySelector('[name="email"]').value;
-                const message = form.querySelector('[name="message"]').value;
-
-                if (name && email && message && email.includes('@') && email.includes('.')) {
-                    messageDiv.style.display = 'block';
-                    form.reset();
-
-                    setTimeout(() => {
-                        messageDiv.style.display = 'none';
-                    }, 5000);
-                } else {
-                    const errorMessage = document.createElement('div');
-                    errorMessage.textContent = 'Пожалуйста, заполните все поля корректно.';
-                    errorMessage.style.cssText = `
-                        margin-top: 20px;
-                        padding: 15px;
-                        border-radius: 8px;
-                        background-color: #f8d7da;
-                        color: #721c24;
-                        text-align: center;
-                    `;
-                    form.insertAdjacentElement('afterend', errorMessage);
-
-                    setTimeout(() => {
-                        errorMessage.remove();
-                    }, 5000);
-                }
-                return false;
-            }
-
+            
             const heroSection = document.getElementById('home');
-    const heroOverlay = document.querySelector('.hero-overlay');
+            const heroOverlay = document.querySelector('.hero-overlay');
 
-    if (heroSection && heroOverlay) {
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            const heroHeight = heroSection.clientHeight;
+            if (heroSection && heroOverlay) {
+                window.addEventListener('scroll', () => {
+                    const scrollPosition = window.scrollY;
+                    const heroHeight = heroSection.clientHeight;
 
-            let opacity = Math.min(1, scrollPosition / heroHeight);
+                    let opacity = Math.min(1, scrollPosition / heroHeight);
 
-            heroOverlay.style.backgroundColor = `rgba(31, 30, 33, ${opacity})`;
+                    heroOverlay.style.backgroundColor = `rgba(31, 30, 33, ${opacity})`;
+                });
+            }
         });
-    }
-});
     </script>
 </body>
 </html>
