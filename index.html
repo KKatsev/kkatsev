@@ -677,27 +677,20 @@
                 return false;
             }
 
-            // Добавляем обработчик на форму, если он ещё не был добавлен в HTML
-            const contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', handleFormSubmit);
-            }
-
-            // JS для эффекта плавного исчезновения фона на главной странице
             const heroSection = document.getElementById('home');
-            const heroOverlay = document.querySelector('.hero-overlay');
+    const heroOverlay = document.querySelector('.hero-overlay');
 
-            if (heroSection && heroOverlay) {
-                window.addEventListener('scroll', () => {
-                    const scrollPosition = window.scrollY;
-                    const heroHeight = heroSection.clientHeight;
+    if (heroSection && heroOverlay) {
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            const heroHeight = heroSection.clientHeight;
 
-                    let opacity = Math.min(1, scrollPosition / heroHeight);
+            let opacity = Math.min(1, scrollPosition / heroHeight);
 
-                    heroOverlay.style.backgroundColor = `rgba(31, 30, 33, ${opacity})`;
-                });
-            }
+            heroOverlay.style.backgroundColor = `rgba(31, 30, 33, ${opacity})`;
         });
+    }
+});
     </script>
 </body>
 </html>
