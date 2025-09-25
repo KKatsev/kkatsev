@@ -11,7 +11,7 @@
         /* CSS-переменные для удобной настройки цветов */
         :root {
             --primary-bg: rgb(31, 30, 33);
-            --secondary-bg: rgb(221, 194, 166);
+            --secondary-bg: rgb(69, 63, 59);
             --accent-color: rgb(223, 170, 109);
             --text-color-light: rgb(221, 194, 166);
             --text-color-dark: rgb(31, 30, 33);
@@ -280,6 +280,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+             
         }
 
         .project-card.visible {
@@ -335,11 +336,12 @@
             align-items: center;
             margin: 0 auto 30px;
             transition: transform 0.5s ease-in-out;
+            
         }
 
         /* Анимация вращения фото */
         .about-photo:hover {
-            transform: rotate(360deg);
+            transform: rotate(30deg);
         }
 
         .about-photo img {
@@ -374,6 +376,7 @@
         .contact-content {
             max-width: 600px;
             margin: 0 auto;
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .contact-info {
@@ -385,7 +388,7 @@
         }
 
         .contact-info a {
-            color: var(--text-color-dark);
+            color: rgba(255, 255, 255, 0.5);
             font-size: 1.1rem;
             font-weight: 500;
         }
@@ -405,7 +408,7 @@
             padding: 15px;
             border-radius: 8px;
             border: 1px solid rgba(31, 30, 33, 0.3);
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: var(--text-color-dark);
             font-family: var(--sans-font);
             font-size: 1rem;
             color: var(--text-color-dark);
@@ -437,6 +440,108 @@
             transform: scale(1.05);
         }
 
+
+/* Контейнер для фото и пластинок */
+.about-photo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 20px 0;
+    
+}
+
+/* Стили для пластинок */
+.vinyl-record {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #333 0%, #111 100%); /* Градиент для объемности */
+    border: 2px solid #555;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7), /* Более выраженная тень */
+                inset 0 0 10px rgba(255, 255, 255, 0.05); /* Внутренний блик */
+    transform-origin: center center; /* Точка вращения */
+}
+
+/* Центр пластинки */
+.vinyl-record::before {
+    content: '';
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+    background: var(--text-color-dark);
+    border: 3px solid #eee;
+    z-index: 2; /* Убедимся, что центр поверх всех деталей */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Тень для центра */
+}
+
+/* "Полосы" на пластинке и отражения */
+.vinyl-record::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    z-index: 1; /* Под центром, но над фоном */
+    /* Имитация бороздков и бликов */
+    background-image:
+        radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%), /* Легкий внутренний блик */
+        linear-gradient(90deg, transparent 48%, rgba(255,255,255,0.05) 49%, rgba(255,255,255,0.05) 51%, transparent 52%), /* Вертикальная линия */
+        linear-gradient(0deg, transparent 48%, rgba(255,255,255,0.05) 49%, rgba(255,255,255,0.05) 51%, transparent 52%), /* Горизонтальная линия */
+        repeating-radial-gradient(circle, #000 0%, #000 1px, transparent 1px, transparent 3px); /* Тонкие круговые бороздки */
+    /* Добавляем пару полос-бликов, которые будут вращаться вместе с пластинкой */
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset, /* Тонкий внутренний ободок */
+        0 0 0 3px rgba(255, 255, 255, 0.05) inset, /* Еще один ободок */
+        -10px -10px 20px rgba(255, 255, 255, 0.15) inset, /* Блик сверху слева */
+        10px 10px 20px rgba(0, 0, 0, 0.2) inset; /* Тень снизу справа */
+}
+
+
+/* Позиционирование левой пластинки */
+.vinyl-record.left {
+    left: 100px;
+    animation: rotateLeft 10s linear infinite;
+}
+
+/* Позиционирование правой пластинки */
+.vinyl-record.right {
+    right: 100px;
+    animation: rotateRight 10s linear infinite;
+}
+
+/* Анимация вращения по часовой стрелке */
+@keyframes rotateRight {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Анимация вращения против часовой стрелки (для разнообразия) */
+@keyframes rotateLeft {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+/* Относительное позиционирование для about-photo, чтобы не "съезжало" */
+.about-photo {
+    position: relative;
+    z-index: 10; /* Убедимся, что фото поверх пластинок */
+}
 
         /* Футер */
         .footer {
@@ -530,24 +635,31 @@
         </div>
     </section>
 
-    <section id="about" class="about">
-        <h2 class="section-title">Обо мне</h2>
-        <div class="about-content">
+<section id="about" class="about">
+    <h2 class="section-title">Обо мне</h2>
+    <div class="about-content">
+        <div class="about-photo-container"> 
+            <div class="vinyl-record left"></div> 
             <div class="about-photo">
-                <img src="SPB_0683.jpg" alt="Фото профиля"> </div>
-            <p>
-                Троюродный брат русской демократии, геолог, сосед по общаге Джона Леннона. <br>Пишу, читаю, монтирую видео, играю на гитаре, иногда сплю, в свободное время пытаюсь разобраться в астрофизике. За свою короткую жизнь научился:
-            </p> <div class="skills-grid">
-                <div class="skill-item">Инженерная геология и гидрогеология</div>
-                <div class="skill-item">Маркшейдерское дело и горный инжиниринг</div>
-                <div class="skill-item">UI/UX Дизайн</div>
-                <div class="skill-item">Adobe Premiere/After Effects</div>
-                <div class="skill-item">C++, C#, HTML, Python, LaTex</div>
-                <div class="skill-item">Типографика</div>
-                <div class="skill-item">Адаптивная вёрстка</div>
+                <img src="SPB_0683.jpg" alt="Фото профиля">
             </div>
+            <div class="vinyl-record right"></div> 
         </div>
-    </section>
+        <p>
+            Троюродный брат русской демократии, геолог, сосед по общаге Джона Леннона. <br>Пишу, читаю, монтирую видео, играю на гитаре, иногда сплю, в свободное время пытаюсь разобраться в астрофизике. За свою короткую жизнь научился:
+        </p>
+        <div class="skills-grid">
+            <div class="skill-item">Инженерная геология и гидрогеология</div>
+            <div class="skill-item">Маркшейдерское дело и горный инжиниринг</div>
+            <div class="skill-item">UI/UX Дизайн</div>
+            <div class="skill-item">Adobe Premiere/After Effects</div>
+            <div class="skill-item">C++, C#, HTML, Python, LaTex</div>
+            <div class="skill-item">Типографика</div>
+            <div class="skill-item">Адаптивная вёрстка</div>
+            <div class="skill-item">Съемка, видео- и аудиомонтаж</div>
+        </div>
+    </div>
+</section>
 
     <section id="contact" class="contact">
         <h2 class="section-title">Контакты</h2>
@@ -569,7 +681,7 @@
                 </label>
                 <label>
                     Сообщение:
-                    <textarea name="message" rows="5" placeholder="Ваше сообщение" required></textarea>
+                    <textarea name="message" color=rgb(255, 255, 255) rows="5" placeholder="Ваше сообщение" required></textarea>
                 </label>
                 <button type="submit">Отправить сообщение</button>
             </form>
